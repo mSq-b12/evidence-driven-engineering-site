@@ -23,6 +23,8 @@ test('site build publishes the package version and a real installation path', as
   assert.match(html, /<html lang="pt-BR">/);
   assert.match(html, /<main id="conteudo">/);
   assert.match(html, /social-preview\.png/);
+  assert.match(html, /github\.com\/mSq-b12\/joao-fecchio-site\/tree\/main\/docs\/superpowers/);
+  assert.doesNotMatch(html, /github\.com\/mSq-b12\/evidence-driven-engineering\/tree\/main\/docs\/superpowers/);
   assert.ok((await stat(join(root, 'dist', 'assets', 'notebook.jpg'))).size > 1000);
   assert.ok((await stat(join(root, 'dist', 'assets', 'social-preview.png'))).size > 1000);
 });
