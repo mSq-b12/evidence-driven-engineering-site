@@ -25,10 +25,61 @@ for (const button of copyButtons) {
   });
 }
 
-const installLink = document.querySelector('[data-install-link]');
-installLink?.addEventListener('click', () => {
-  window.setTimeout(() => document.getElementById('install-title')?.focus({ preventScroll: true }), 100);
+const storyLink = document.querySelector('[data-story-link]');
+storyLink?.addEventListener('click', () => {
+  window.requestAnimationFrame(() => document.getElementById('letter-title')?.focus({ preventScroll: true }));
 });
+
+const artifact = document.querySelector('[data-artifact]');
+if (artifact && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let pendingFrame = false;
+  artifact.addEventListener('pointermove', (event) => {
+    if (pendingFrame) return;
+    pendingFrame = true;
+    window.requestAnimationFrame(() => {
+      const rect = artifact.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width - .5) * 5;
+      const y = ((event.clientY - rect.top) / rect.height - .5) * -5;
+      artifact.style.setProperty('--tilt-x', `${x.toFixed(2)}deg`);
+      artifact.style.setProperty('--tilt-y', `${y.toFixed(2)}deg`);
+      pendingFrame = false;
+    });
+  });
+  artifact.addEventListener('pointerleave', () => {
+    artifact.style.setProperty('--tilt-x', '0deg');
+    artifact.style.setProperty('--tilt-y', '0deg');
+  });
+}
+
+const methodInstrument = document.querySelector('[data-method-instrument]');
+const stepReadout = document.querySelector('[data-step-readout]');
+for (const stage of document.querySelectorAll('[data-step]')) {
+  stage.addEventListener('toggle', () => {
+    if (!stage.open || !methodInstrument || !stepReadout) return;
+    const step = Number(stage.dataset.step);
+    if (!Number.isInteger(step) || step < 1 || step > 5) return;
+    methodInstrument.style.setProperty('--step', String(step));
+    stepReadout.textContent = String(step).padStart(2, '0');
+  });
+}
+
+const storyProgress = document.querySelector('[data-story-progress]');
+if (storyProgress) {
+  let progressFrame = false;
+  const updateProgress = () => {
+    if (progressFrame) return;
+    progressFrame = true;
+    window.requestAnimationFrame(() => {
+      const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const value = Math.min(1, Math.max(0, window.scrollY / range));
+      storyProgress.style.transform = `scaleX(${value})`;
+      progressFrame = false;
+    });
+  };
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+}
 
 const seal = document.getElementById('gift-seal');
 const note = document.getElementById('gift-note');
