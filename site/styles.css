@@ -192,7 +192,7 @@ h1, h2, h3, p, figure { text-wrap: pretty; }
 .hero { display: block; min-height: 0; padding: 0; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--paper); }
 .hero-grid { min-height: min(840px, calc(100svh - 76px)); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(20px, 3vw, 48px); align-items: center; padding-block: clamp(64px, 7vw, 108px) 48px; }
 .hero-copy { position: relative; z-index: 1; align-self: center; padding: 0 0 22px; }
-@keyframes title-unfold { from { clip-path: inset(0 0 100% 0); transform: translateY(22px); } to { clip-path: inset(0 0 0 0); transform: translateY(0); } }
+@keyframes title-unfold { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes artifact-unfold { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 .hero h1 { animation: title-unfold .85s cubic-bezier(.2,.7,.2,1) both; }
 .artifact-frame { animation: artifact-unfold 1s .12s cubic-bezier(.2,.7,.2,1) both; }

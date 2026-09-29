@@ -76,6 +76,13 @@ test('the hero title keeps enough line height for complete glyphs', async () => 
   assert.ok(lineHeight >= 1, `expected hero title line-height >= 1, received ${lineHeight}`);
 });
 
+test('the hero title animation does not clip glyphs after it finishes', async () => {
+  const css = await readFile(join(root, 'site', 'styles.css'), 'utf8');
+  const titleAnimation = css.match(/@keyframes title-unfold\s*\{([^}]+\{[^}]+\}[^}]+\})/s)?.[1] ?? '';
+  assert.notEqual(titleAnimation, '', 'expected title-unfold keyframes to exist');
+  assert.doesNotMatch(titleAnimation, /clip-path/i);
+});
+
 test('site build publishes the package version and a real installation path', async () => {
   const built = spawnSync(process.execPath, ['scripts/build-site.mjs'], { cwd: root, encoding: 'utf8' });
   assert.equal(built.status, 0, built.stderr || built.stdout);
