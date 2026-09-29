@@ -27,7 +27,7 @@ for (const button of copyButtons) {
 
 const storyLink = document.querySelector('[data-story-link]');
 storyLink?.addEventListener('click', () => {
-  window.requestAnimationFrame(() => document.getElementById('letter-title')?.focus({ preventScroll: true }));
+  window.requestAnimationFrame(() => document.getElementById('process-title')?.focus({ preventScroll: true }));
 });
 
 const artifact = document.querySelector('[data-artifact]');
@@ -80,12 +80,3 @@ if (storyProgress) {
   window.addEventListener('resize', updateProgress);
   updateProgress();
 }
-
-const seal = document.getElementById('gift-seal');
-const note = document.getElementById('gift-note');
-seal?.addEventListener('click', () => {
-  const open = seal.getAttribute('aria-expanded') === 'true';
-  seal.setAttribute('aria-expanded', String(!open));
-  note.hidden = open;
-  if (!open) note.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
-});

@@ -33,5 +33,8 @@ await writeFile(join(output, 'index.html'), html, 'utf8');
 for (const file of ['styles.css', 'app.js', 'favicon.svg']) {
   await cp(join(source, file), join(output, file));
 }
-await cp(join(source, 'assets'), join(output, 'assets'), { recursive: true });
-console.log(`Built gift site for Evidence-driven Engineering v${release.version}`);
+await mkdir(join(output, 'assets'), { recursive: true });
+for (const file of ['evidence-dial.webp', 'notebook.jpg']) {
+  await cp(join(source, 'assets', file), join(output, 'assets', file));
+}
+console.log(`Built public Evidence-driven Engineering site for v${release.version}`);

@@ -1,6 +1,8 @@
-# Site para João Fecchio
+# Evidence-driven Engineering — site oficial da Skill
 
-Este repositório contém somente o site-presente para João. A skill instalável, seu código, marketplace e releases vivem separadamente em [Evidence-driven Engineering](https://github.com/mSq-b12/evidence-driven-engineering).
+Site público de apresentação e instalação de [Evidence-driven Engineering](https://github.com/mSq-b12/evidence-driven-engineering), uma skill independente para orientar agentes em tarefas de engenharia de software.
+
+Este repositório publica somente o site estático. A skill canônica, o plugin, o marketplace e as releases são mantidos separadamente no repositório do produto; não copie nem publique o pacote por aqui.
 
 ## Stack e estrutura
 
@@ -11,7 +13,7 @@ Este repositório contém somente o site-presente para João. A skill instaláve
 - `tests/site.test.mjs`: valida o build, os comandos e os botões de copiar.
 - `.github/workflows/pages.yml`: testes e deploy automático no GitHub Pages.
 
-O site não contém uma cópia da skill, não precisa de backend e não coleta dados, cookies ou analytics. Os comandos de instalação apontam para uma tag pública e imutável do **outro** repositório.
+O site não contém uma cópia da skill, não precisa de backend e não coleta dados, cookies ou analytics. Os comandos apontam para a tag pública fixada em `skill-release.json`. A publicação da Skill e a publicação deste site são mudanças separadas.
 
 ## Rodar localmente
 
@@ -31,11 +33,11 @@ node --test
 node scripts/build-site.mjs
 ```
 
-Para conferir a instalação de ponta a ponta sem alterar seu Codex pessoal, use um `CODEX_HOME` descartável, rode os dois comandos mostrados no site e confirme `installed: true` e `enabled: true` em `codex plugin list --json`. Remova somente o diretório descartável depois.
+O primeiro comando cadastra o marketplace; ele não instala o plugin. Instale-o pela tela Plugins do Codex ou, nas versões de CLI que oferecem o comando, por `codex plugin add`. O projeto da Skill documenta atualização e remoção em [installation.md](https://github.com/mSq-b12/evidence-driven-engineering/blob/main/docs/installation.md). Smoke tests devem usar um `CODEX_HOME` temporário, sem alterar o perfil habitual do usuário.
 
 ## Publicar
 
-Pushes em `main` executam o workflow que publica `dist/` em <https://msq-b12.github.io/joao-fecchio-site/>. O repositório precisa ter Pages configurado para **GitHub Actions**. Os recursos locais usam caminhos relativos; para um domínio próprio, atualize `canonical`, `og:url` e as imagens sociais absolutas em `site/index.html`.
+Pushes em `main` com mudanças nos caminhos monitorados executam os testes, geram `dist/` e publicam em <https://msq-b12.github.io/joao-fecchio-site/>. O GitHub Pages precisa estar configurado para **GitHub Actions**. Recursos locais usam caminhos relativos. Se mudar domínio ou nome do repositório, atualize URL canônica e metadados sociais em `site/index.html`.
 
 ## Atualizar a versão recomendada
 

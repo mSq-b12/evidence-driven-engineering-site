@@ -8,32 +8,42 @@ import { runInNewContext } from 'node:vm';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-test('the story begins at Braian’s letter, not at installation or the method list', async () => {
+test('the public experience opens into the method instead of a private letter', async () => {
   const html = await readFile(join(root, 'site', 'index.html'), 'utf8');
-  assert.doesNotMatch(html, /Começar instalação|data-install-link/);
-  assert.match(html, /class="story-link"[^>]*href="#carta"/);
-  assert.match(html, /<section[^>]*id="carta"[^>]*aria-labelledby="letter-title"/);
-  assert.match(html, /<h2 id="letter-title" tabindex="-1">/);
-  assert.ok(html.indexOf('id="carta"') < html.indexOf('id="metodo"'));
+  assert.match(html, /<html lang="pt-BR">/);
+  assert.match(html, /<title>Evidence-driven Engineering[^<]*<\/title>/);
+  assert.match(html, /class="story-link"[^>]*href="#processo"/);
+  assert.match(html, /<section[^>]*id="processo"[^>]*aria-labelledby="process-title"/);
+  assert.match(html, /<h2 id="process-title" tabindex="-1">/);
+  assert.doesNotMatch(html, /João Fecchio|Para João|Feito para João|JF—01|gift-note|gift-seal/i);
+  assert.match(html, /não é produto oficial da OpenAI|projeto independente;/);
 });
 
-test('the experience preserves the full story and a no-script method circuit', async () => {
+test('the public experience explains the skill, evidence, use, and verified distribution', async () => {
   const html = await readFile(join(root, 'site', 'index.html'), 'utf8');
-  assert.match(html, /<h1 id="hero-title">[^<]*João Fecchio/);
-  assert.match(html, /id="carta"/);
+  assert.match(html, /<h1 id="hero-title">Evidence-driven Engineering/);
+  assert.match(html, /Codex e outros agentes de programação/);
   assert.match(html, /id="processo"/);
   assert.match(html, /id="metodo"/);
   assert.match(html, /id="evidencia"/);
-  assert.match(html, /id="entrega"/);
   assert.match(html, /id="instalar"/);
-  assert.ok(html.indexOf('id="carta"') < html.indexOf('id="processo"'));
+  assert.equal((html.match(/class="process-index"/g) ?? []).length, 5);
   assert.ok(html.indexOf('id="processo"') < html.indexOf('id="metodo"'));
   assert.ok(html.indexOf('id="metodo"') < html.indexOf('id="evidencia"'));
   assert.ok(html.indexOf('id="evidencia"') < html.indexOf('id="instalar"'));
-  assert.ok(html.indexOf('id="evidencia"') < html.indexOf('id="entrega"'));
-  assert.ok(html.indexOf('id="entrega"') < html.indexOf('id="instalar"'));
   assert.equal((html.match(/<details[^>]*class="method-stage"/g) ?? []).length, 5);
   assert.equal((html.match(/<summary>/g) ?? []).length >= 5, true);
+  assert.match(html, /O primeiro comando adiciona a fonte; ele ainda não instala o plugin/);
+  assert.match(html, /Prefira Plugins no Codex; use este comando se sua CLI oferecer suporte/);
+  assert.match(html, /github\.com\/mSq-b12\/evidence-driven-engineering/);
+});
+
+test('the hero action introduces the public method and focuses its heading', async () => {
+  const script = await readFile(join(root, 'site', 'app.js'), 'utf8');
+  const html = await readFile(join(root, 'site', 'index.html'), 'utf8');
+  assert.match(html, /class="story-link"[^>]*href="#processo"/);
+  assert.match(script, /getElementById\('process-title'\).*focus/);
+  assert.doesNotMatch(script, /gift-seal|gift-note/);
 });
 
 test('opening a method stage updates the instrument without making content script-dependent', async () => {
@@ -65,16 +75,18 @@ test('site build publishes the package version and a real installation path', as
   assert.match(html, new RegExp(`${manifest.repository}@v${manifest.version.replaceAll('.', '\\.')}`));
   assert.match(html, /https:\/\/mSq-b12\.github\.io\/joao-fecchio-site\//);
   assert.doesNotMatch(html, /mSq-b12\.github\.io\/evidence-driven-engineering\//);
+  assert.match(html, /property="og:title" content="Evidence-driven Engineering/);
+  assert.doesNotMatch(html, /João|JF|presente/i);
   assert.match(html, /codex plugin add evidence-driven-engineering@evidence-driven-engineering/);
-  assert.match(html, /O navegador não consegue verificar plugins instalados/);
+  assert.match(html, /não consegue inspecionar nem verificar o que está no seu computador/);
   assert.doesNotMatch(html, /\{\{[^}]+\}\}|OWNER|localhost/i);
-  assert.match(html, /<html lang="pt-BR">/);
   assert.match(html, /<main id="conteudo">/);
-  assert.match(html, /social-preview\.png/);
-  assert.match(html, /github\.com\/mSq-b12\/joao-fecchio-site\/tree\/main\/docs\/superpowers/);
+  assert.match(html, /assets\/evidence-dial\.webp/);
+  assert.match(html, /github\.com\/mSq-b12\/evidence-driven-engineering\/blob\/main\/README\.md/);
   assert.doesNotMatch(html, /github\.com\/mSq-b12\/evidence-driven-engineering\/tree\/main\/docs\/superpowers/);
   assert.ok((await stat(join(root, 'dist', 'assets', 'notebook.jpg'))).size > 1000);
-  assert.ok((await stat(join(root, 'dist', 'assets', 'social-preview.png'))).size > 1000);
+  assert.ok((await stat(join(root, 'dist', 'assets', 'evidence-dial.webp'))).size > 1000);
+  await assert.rejects(stat(join(root, 'dist', 'assets', 'social-preview.png')), { code: 'ENOENT' });
 });
 
 test('copy controls use the exact command and explain clipboard fallback', async () => {
