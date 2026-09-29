@@ -1,4 +1,4 @@
-name: Publish gift site
+name: Publish Evidence-driven Engineering site
 
 on:
   push:
