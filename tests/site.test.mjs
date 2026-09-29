@@ -66,6 +66,16 @@ test('visual motion is opt-in and has a reduced-motion path', async () => {
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
+test('the hero title keeps enough line height for complete glyphs', async () => {
+  const css = await readFile(join(root, 'site', 'styles.css'), 'utf8');
+  const titleRules = [...css.matchAll(/\.hero h1\s*\{([^}]*)\}/g)].map((match) => match[1]);
+  const declaredLineHeights = titleRules
+    .map((rule) => Number(rule.match(/line-height:\s*([\d.]+)/)?.[1]))
+    .filter(Number.isFinite);
+  const lineHeight = declaredLineHeights.at(-1);
+  assert.ok(lineHeight >= 1, `expected hero title line-height >= 1, received ${lineHeight}`);
+});
+
 test('site build publishes the package version and a real installation path', async () => {
   const built = spawnSync(process.execPath, ['scripts/build-site.mjs'], { cwd: root, encoding: 'utf8' });
   assert.equal(built.status, 0, built.stderr || built.stdout);

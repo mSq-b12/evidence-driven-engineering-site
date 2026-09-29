@@ -198,7 +198,7 @@ h1, h2, h3, p, figure { text-wrap: pretty; }
 .artifact-frame { animation: artifact-unfold 1s .12s cubic-bezier(.2,.7,.2,1) both; }
 .hero .eyebrow { display: flex; align-items: center; gap: 13px; margin-bottom: 36px; letter-spacing: .14em; }
 .eyebrow-line { display: inline-block; width: 34px; height: 1px; background: var(--accent); }
-.hero h1 { max-width: 11ch; font-size: clamp(70px, 7.8vw, 130px); line-height: .92; letter-spacing: -.085em; }
+.hero h1 { max-width: 11ch; font-size: clamp(70px, 7.8vw, 130px); line-height: 1.08; letter-spacing: -.085em; }
 .hero-title-dot { color: var(--accent); }
 .hero-deck { max-width: 17ch; margin: 34px 0 0; font: italic 400 clamp(27px, 2.8vw, 43px)/1.17 var(--serif); letter-spacing: -.04em; }
 .hero-intro { max-width: 40ch; margin-top: 27px; font-size: 16px; line-height: 1.65; }
