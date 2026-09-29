@@ -38,6 +38,17 @@ test('the public experience explains the skill, evidence, use, and verified dist
   assert.match(html, /github\.com\/mSq-b12\/evidence-driven-engineering/);
 });
 
+test('the footer credits both the site and skill to mSq Build without inventing a link', async () => {
+  const html = await readFile(join(root, 'site', 'index.html'), 'utf8');
+  const footer = html.match(/<footer\b[\s\S]*?<\/footer>/)?.[0] ?? '';
+  assert.match(footer, /Site e Skill criados por<\/span><strong>mSq Build<\/strong>/);
+  assert.doesNotMatch(footer, /<a\b[^>]*>[^<]*mSq Build/);
+  assert.match(footer, /não é produto oficial da OpenAI, Anthropic, Claude ou Codex/);
+  assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/joao-fecchio-site"/);
+  assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/evidence-driven-engineering"/);
+  assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/evidence-driven-engineering\/blob\/main\/docs\/installation\.md"/);
+});
+
 test('the hero action introduces the public method and focuses its heading', async () => {
   const script = await readFile(join(root, 'site', 'app.js'), 'utf8');
   const html = await readFile(join(root, 'site', 'index.html'), 'utf8');

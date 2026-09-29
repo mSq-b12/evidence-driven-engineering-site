@@ -321,6 +321,8 @@ h1, h2, h3, p, figure { text-wrap: pretty; }
 .example-prompt { border-left-width: 2px; background: #dfe7dd; }
 .site-footer { background: var(--dark); color: #f1f0e9; border: 0; }
 .footer-inner p { color: #c1c9c0; }
+.footer-signature { display: flex; justify-content: flex-end; align-items: baseline; gap: 6px; margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--dark-line); color: #c1c9c0; font: 12px/1.4 var(--mono); }
+.footer-signature strong { color: #f1f0e9; font-weight: 700; letter-spacing: .04em; }
 
 @media (hover: hover) and (pointer: fine) {
   .artifact-frame:hover { --tilt-x: -2deg; --tilt-y: 2deg; }
