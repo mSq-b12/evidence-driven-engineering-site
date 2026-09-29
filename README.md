@@ -37,7 +37,7 @@ O primeiro comando cadastra o marketplace; ele não instala o plugin. Instale-o 
 
 ## Publicar
 
-Pushes em `main` com mudanças nos caminhos monitorados executam os testes, geram `dist/` e publicam em <https://msq-b12.github.io/joao-fecchio-site/>. O GitHub Pages precisa estar configurado para **GitHub Actions**. Recursos locais usam caminhos relativos. Se mudar domínio ou nome do repositório, atualize URL canônica e metadados sociais em `site/index.html`.
+Pushes em `main` com mudanças nos caminhos monitorados executam os testes, geram `dist/` e publicam em <https://msq-b12.github.io/evidence-driven-engineering-site/>. O GitHub Pages precisa estar configurado para **GitHub Actions**. Recursos locais usam caminhos relativos. Se mudar domínio ou nome do repositório, atualize URL canônica e metadados sociais em `site/index.html`.
 
 ## Atualizar a versão recomendada
 

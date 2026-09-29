@@ -44,7 +44,7 @@ test('the footer credits both the site and skill to mSq Build without inventing 
   assert.match(footer, /Site e Skill criados por<\/span><strong>mSq Build<\/strong>/);
   assert.doesNotMatch(footer, /<a\b[^>]*>[^<]*mSq Build/);
   assert.match(footer, /não é produto oficial da OpenAI, Anthropic, Claude ou Codex/);
-  assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/joao-fecchio-site"/);
+  assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/evidence-driven-engineering-site"/);
   assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/evidence-driven-engineering"/);
   assert.match(footer, /href="https:\/\/github\.com\/mSq-b12\/evidence-driven-engineering\/blob\/main\/docs\/installation\.md"/);
 });
@@ -101,7 +101,7 @@ test('site build publishes the package version and a real installation path', as
   const manifest = JSON.parse(await readFile(join(root, 'skill-release.json'), 'utf8'));
   const html = await readFile(join(root, 'dist', 'index.html'), 'utf8');
   assert.match(html, new RegExp(`${manifest.repository}@v${manifest.version.replaceAll('.', '\\.')}`));
-  assert.match(html, /https:\/\/mSq-b12\.github\.io\/joao-fecchio-site\//);
+  assert.match(html, /https:\/\/msq-b12\.github\.io\/evidence-driven-engineering-site\//);
   assert.doesNotMatch(html, /mSq-b12\.github\.io\/evidence-driven-engineering\//);
   assert.match(html, /property="og:title" content="Evidence-driven Engineering/);
   assert.doesNotMatch(html, /João|JF|presente/i);
